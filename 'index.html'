@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMM Panel Auth</title>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMM Panel Auth</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC5YJYrrA_waQxHAwzSRU2MuPOXzhO6rSg",
-  authDomain: "server-pulse-49150.firebaseapp.com",
-  projectId: "server-pulse-49150",
-  storageBucket: "server-pulse-49150.firebasestorage.app",
-  messagingSenderId: "889380455956",
-  appId: "1:889380455956:web:44bd4c76b1b02cdc9b4901",
-  measurementId: "G-W5R11XXT8Q"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5YJYrrA_waQxHAwzSRU2MuPOXzhO6rSg",
+            authDomain: "server-pulse-49150.firebaseapp.com",
+            projectId: "server-pulse-49150",
+            storageBucket: "server-pulse-49150.firebasestorage.app",
+            messagingSenderId: "889380455956",
+            appId: "1:889380455956:web:44bd4c76b1b02cdc9b4901",
+            measurementId: "G-W5R11XXT8Q"
+        };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
 
-document.getElementById("loginBtn").addEventListener("click", () => {
-  signInWithPopup(auth, provider)
-    .then(async (result) => {
-      const user = result.user;
-      await setDoc(doc(db, "users", user.uid), {
-        name: user.displayName,
-        email: user.email,
-        balance: 0
-      }, { merge: true });
-      document.getElementById("status").innerText = "Logged in as " + user.displayName;
-    }).catch((error) => {
-      console.error(error);
-    });
-});
-</script>
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            signInWithPopup(auth, provider)
+                .then(async (result) => {
+                    const user = result.user;
+                    await setDoc(doc(db, "users", user.uid), {
+                        name: user.displayName,
+                        email: user.email,
+                        balance: 0
+                    }, { merge: true });
+                    document.getElementById("status").innerText = "Logged in as " + user.displayName;
+                }).catch((error) => {
+                    console.error(error);
+                });
+        });
+    </script>
 </head>
 <body>
-<h1>SMM Panel Login</h1>
-<button id="loginBtn">Login with Google</button>
-<p id="status"></p>
+    <h1>SMM Panel Login</h1>
+    <button id="loginBtn">Login with Google</button>
+    <p id="status"></p>
 </body>
 </html>
